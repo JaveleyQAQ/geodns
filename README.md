@@ -27,8 +27,13 @@
 - **Cloudflare**：Cloudflare DNS (1.1.1.1)
 
 ## 📦 安装
+## 方式一 : GO install 
+```
+go install github.com/JaveleyQAQ/geodns/cmd/geodns@latest
+```
 
-### 从源码编译
+
+### 方式二: 从源码编译
 ```bash
 git clone https://github.com/JaveleyQAQ/geodns.git
 cd geodns
@@ -200,14 +205,6 @@ example.com
 microsoft.com
 ```
 
-### 子域名列表文件 (subdomains.txt)
-```
-www
-mail
-ftp
-admin
-api
-```
 
 ## 🐛 调试模式
 
@@ -260,14 +257,9 @@ api
 ./geodns -d google.com -silent -v
 ```
 
-
-## 📄 许可证
-
-MIT License
-
 ## 🤝 贡献
-
-欢迎提交Issue和Pull Request来改进这个项目！
+- 所有代码都来自我的助手`cursor`
+- 欢迎提交Issue和Pull Request来改进这个项目！
 
 ## 📞 联系方式
 
