@@ -43,7 +43,7 @@ go build -o geodns cmd/geodns/main.go
 
 ### Direct Usage
 ```bash
-./geodns -h
+geodns -h
 ```
 
 ## 🚀 Usage
@@ -51,7 +51,7 @@ go build -o geodns cmd/geodns/main.go
 ### Command Line Arguments
 
 #### Input Options
-- `-l string` - Subdomain list file or standard input
+- `-l string` - Subdomain list file or pipe input
 - `-d string` - Domain list, file/comma-separated/standard input
 
 #### Query Types
@@ -84,48 +84,141 @@ go build -o geodns cmd/geodns/main.go
 ## 📝 Usage Examples
 
 ### Basic Queries
+- Query A records for a single domain
 ```bash
-# Query A records for a single domain
-./geodns -d google.com
+geodns -d google.com
 
-# Query multiple domains
-./geodns -d "google.com,github.com,example.com"
-
-# Query domain list from file
-./geodns -d domains.txt
-
-# Query from standard input
-echo "google.com" | ./geodns -d -
+google.com [A] [142.250.197.46]
+google.com [A] [142.250.198.110]
+google.com [A] [142.250.199.78]
+google.com [A] [142.250.76.14]
+google.com [A] [142.251.10.100]
+google.com [A] [142.251.10.101]
+google.com [A] [142.251.10.102]
+google.com [A] [142.251.10.113]
+google.com [A] [142.251.10.138]
+google.com [A] [142.251.10.139]
+google.com [A] [142.251.111.100]
+google.com [A] [142.251.111.101]
+google.com [A] [142.251.111.102]
+google.com [A] [142.251.111.113]
+google.com [A] [142.251.111.138]
+google.com [A] [142.251.111.139]
+google.com [A] [142.251.12.100]
+google.com [A] [142.251.12.101]
+google.com [A] [142.251.12.102]
+google.com [A] [142.251.12.113]
+google.com [A] [142.251.12.138]
+google.com [A] [142.251.12.139]
+google.com [A] [172.253.118.100]
+google.com [A] [172.253.118.101]
+google.com [A] [172.253.118.102]
+google.com [A] [172.253.118.113]
+google.com [A] [172.253.118.138]
+google.com [A] [172.253.118.139]
+google.com [A] [172.253.122.100]
+google.com [A] [172.253.122.101]
+google.com [A] [172.253.122.102]
+google.com [A] [172.253.122.113]
+google.com [A] [172.253.122.138]
+google.com [A] [172.253.122.139]
+google.com [A] [64.233.170.100]
+google.com [A] [64.233.170.101]
+google.com [A] [64.233.170.102]
+google.com [A] [64.233.170.113]
+google.com [A] [64.233.170.138]
+google.com [A] [64.233.170.139]
+google.com [A] [74.125.24.100]
+google.com [A] [74.125.24.101]
+google.com [A] [74.125.24.102]
+google.com [A] [74.125.24.113]
+google.com [A] [74.125.24.138]
+google.com [A] [74.125.24.139]
+google.com [A] [74.125.68.100]
+google.com [A] [74.125.68.101]
+google.com [A] [74.125.68.102]
+google.com [A] [74.125.68.113]
+google.com [A] [74.125.68.138]
+google.com [A] [74.125.68.139]
 ```
 
-### Specify Record Types
+- Query multiple domains AAAA records and show results only
 ```bash
-# Query AAAA records
-./geodns -d google.com -aaaa
+geodns -d "google.com,github.com,example.com" -ro -silent
 
-# Query TXT records
-./geodns -d google.com -txt
-
-# Query MX records
-./geodns -d google.com -mx
-
-# Query all record types (reconnaissance mode)
-./geodns -d google.com -recon
+142.250.197.174
+142.250.198.110
+142.250.199.78
+142.250.71.238
+142.250.76.238
+142.251.12.100
+142.251.12.101
+142.251.12.102
+142.251.12.113
+142.251.12.138
+142.251.12.139
+172.217.194.100
+172.217.194.101
+172.217.194.102
+172.217.194.113
+172.217.194.138
+172.217.194.139
+20.205.243.166
+23.192.228.80
+23.192.228.84
+23.215.0.136
+23.215.0.138
+64.233.170.100
+64.233.170.101
+64.233.170.102
+64.233.170.113
+64.233.170.138
+64.233.170.139
+74.125.130.100
+74.125.130.101
+74.125.130.102
+74.125.130.113
+74.125.130.138
+74.125.130.139
+74.125.68.100
+74.125.68.101
+74.125.68.102
+74.125.68.113
+74.125.68.138
+74.125.68.139
+96.7.128.175
+96.7.128.198
 ```
 
-### Output Format Control
+- Query domain list from file
+```bash
+geodns -d domains.txt
+```
+
+- Query from standard input
+```bash
+echo "google.com" | geodns 
+cat url.txt | geodns
+```
+
+- Query all record types (reconnaissance mode)
+```bash
+geodns -d google.com -recon
+```
+
+- Output format control
 ```bash
 # Show response values only
-./geodns -d google.com -ro
+geodns -d google.com -ro
 
 # JSON format output
-./geodns -d google.com -json
+geodns -d google.com -json
 
 # Output to file
-./geodns -d google.com -o results.txt
+geodns -d google.com -o results.txt
 
 # Silent mode (suitable for scripts)
-./geodns -d google.com -silent -ro
+geodns -d google.com -silent -ro
 
 # Combined usage: silent mode + file output + JSON format
 ./geodns -d domains.txt -recon -json -silent -o results.json
@@ -134,16 +227,16 @@ echo "google.com" | ./geodns -d -
 ### Advanced Features
 ```bash
 # Use Google DNS resolver
-./geodns -d google.com -r google
+geodns -d google.com -r google
 
 # Set 50 concurrent threads
-./geodns -d domains.txt -t 50
+geodns -d domains.txt -t 50
 
 # Verbose mode (show debug information)
-./geodns -d google.com -mx -v
+geodns -d google.com -mx -v
 
 # Combined usage
-./geodns -d domains.txt -recon -json -r alidns -t 20
+geodns -d domains.txt -recon -json -r alidns -t 20
 ```
 
 ## 🎨 Output Format
@@ -213,7 +306,7 @@ Use the `-v` parameter to enable verbose mode, displaying:
 - Record type processing information
 
 ```bash
-./geodns -d google.com -mx -v
+geodns -d google.com -mx -v
 ```
 
 ## ⚠️ Important Notes
@@ -243,16 +336,16 @@ Use the `-v` parameter to enable verbose mode, displaying:
 ### Debugging Tips
 ```bash
 # Enable verbose mode to view issues
-./geodns -d google.com -v
+geodns -d google.com -v
 
 # Use different resolver
-./geodns -d google.com -r google
+geodns -d google.com -r google
 
 # Reduce concurrency
-./geodns -d domains.txt -t 5
+geodns -d domains.txt -t 5
 
 # Silent mode debugging
-./geodns -d google.com -silent -v
+geodns -d google.com -silent -v
 ```
 
 ## 🤝 Contributing

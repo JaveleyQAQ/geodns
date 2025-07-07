@@ -108,12 +108,20 @@ func main() {
 	var domains []string
 	var err error
 	inputProcessor := input.NewInputProcessor()
+
+	// 检查是否有标准输入
+	stat, _ := os.Stdin.Stat()
+	hasStdin := (stat.Mode() & os.ModeCharDevice) == 0
+
 	if *inputFile != "" {
 		domains, err = inputProcessor.ReadFromFile(*inputFile)
 	} else if *domainArg != "" {
 		domains, err = inputProcessor.GetDomains(*domainArg)
+	} else if hasStdin {
+		// 自动检测标准输入
+		domains, err = inputProcessor.ReadFromStdin()
 	} else {
-		fmt.Fprintln(os.Stderr, "请使用 -l 或 -d 指定域名输入")
+		fmt.Fprintln(os.Stderr, "请使用 -l 或 -d 指定域名输入，或通过管道提供输入")
 		os.Exit(1)
 	}
 	if err != nil {
