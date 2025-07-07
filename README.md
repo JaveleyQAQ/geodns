@@ -273,4 +273,4 @@ MIT License
 
 - GitHub: https://github.com/JaveleyQAQ
 - 项目地址: https://github.com/JaveleyQAQ/geodns
-- > 数据来源 https://dns.surf/
+- 数据来源: https://dns.surf/
